@@ -16,7 +16,7 @@ function simulateRapportUpload() {
   document.getElementById('f2-btn-rapport').style.display = 'flex';
 }
 function resetRapport() {
-  document.getElementById('f2-rapport-zone').innerHTML = '<button onclick="simulateRapportUpload()" style="display:inline-flex;align-items:center;gap:6px;padding:8px 14px;background:white;border:1.5px solid #bfdbfe;border-radius:8px;font-size:13px;font-weight:600;color:#1d4ed8;cursor:pointer;font-family:inherit;">📎 Ajouter le rapport</button>';
+  document.getElementById('f2-rapport-zone').innerHTML = '<button onclick="simulateRapportUpload()" style="display:inline-flex;align-items:center;gap:6px;padding:8px 14px;background:#4E49FC;border:none;border-radius:8px;font-size:13px;font-weight:600;color:white;cursor:pointer;font-family:inherit;">📎 Ajouter le rapport</button>';
   document.getElementById('f2-btn-rapport').style.display = 'none';
 }
 function openTemplateModal() {
@@ -1928,7 +1928,6 @@ main { flex: 1; overflow-y: auto; padding: 32px; position: relative; }
         <p style="font-size:12px;color:#6b7280;font-style:italic;">Parties communes : hall d'entrée, cage d'escalier, ascenseur, combles, toiture, couloir, local poubelle…</p>
         <div id="loc-pc" style="display:none;margin-top:28px;padding-top:28px;border-top:1px solid #f0f0f0;">
           <h3>Quelles parties communes sont touchées ?</h3>
-          <p style="font-size:12px;color:#6b7280;font-style:italic;margin-bottom:12px;">Laissez vide si aucune n'est concernée.</p>
           <div style="display:flex;flex-direction:column;gap:8px;">
             <label class="chk-item"><input type="checkbox" onchange="onCheckPC()"/> Hall d'entrée</label>
             <label class="chk-item"><input type="checkbox" onchange="onCheckPC()"/> Cage d'escalier</label>
@@ -1936,6 +1935,7 @@ main { flex: 1; overflow-y: auto; padding: 32px; position: relative; }
             <label class="chk-item"><input type="checkbox" onchange="onCheckPC()"/> Couloir</label>
             <label class="chk-item"><input type="checkbox" onchange="onCheckPC()"/> Combles / Toiture</label>
             <label class="chk-item"><input type="checkbox" onchange="onCheckPC()"/> Local poubelle</label>
+            <label class="chk-item"><input type="checkbox" onchange="onCheckPC()"/> Cour / Jardin</label>
             <label class="chk-item"><input type="checkbox" onchange="onCheckPC()"/> Autre</label>
           </div>
         </div>
@@ -1945,7 +1945,7 @@ main { flex: 1; overflow-y: auto; padding: 32px; position: relative; }
             <button class="loc-btn" onclick="selectBat(this)">Bâtiment A</button>
             <button class="loc-btn" onclick="selectBat(this)">Bâtiment B</button>
             <button class="loc-btn" onclick="selectBat(this)">Bâtiment C</button>
-            <button class="loc-btn" onclick="selectBat(this)">Je ne sais pas</button>
+            <button class="loc-btn" onclick="selectBat(this)">Autre</button>
           </div>
         </div>
         <div id="loc-etage" style="display:none;margin-top:28px;padding-top:28px;border-top:1px solid #f0f0f0;">
@@ -1956,6 +1956,7 @@ main { flex: 1; overflow-y: auto; padding: 32px; position: relative; }
         </div>
         <div id="loc-copros" style="display:none;margin-top:28px;padding-top:28px;border-top:1px solid #f0f0f0;">
           <h3>Contact de la personne pouvant donner accès aux lieux</h3>
+          <p style="font-size:13px;color:#6b7280;margin-top:4px;">Ce contact sera transmis au prestataire en cas de besoin.</p>
           <div style="margin-top:12px;max-width:480px;" id="copros-incident-wrapper">
             <div id="copros-incident-input" onclick="openCoprosIncident()" style="display:flex;flex-wrap:wrap;align-items:center;gap:6px;min-height:40px;padding:6px 10px;border:1.5px solid #e5e7eb;border-radius:8px;cursor:text;background:white;transition:border 0.15s;">
               <span id="copros-incident-placeholder" style="font-size:13px;color:#9ca3af;">Sélectionner des copropriétaires…</span>
@@ -2149,7 +2150,8 @@ main { flex: 1; overflow-y: auto; padding: 32px; position: relative; }
           
           <!-- Partie 1 : texte conseil + lien template -->
           <div style="margin-bottom:20px;">
-            <p style="font-size:13.5px;color:#374151;line-height:1.7;">Dans ce cas, c'est votre assurance habitation qui doit prendre en charge la recherche de fuite. Contactez-la dès que possible en déclarant le sinistre. <span onclick="openTemplateModal()" style="color:#4E49FC;font-weight:600;cursor:pointer;text-decoration:underline;">Voir le template de mail →</span></p>
+            <p style="font-size:13.5px;color:#374151;line-height:1.7;">C'est votre assurance habitation qui doit mandater la recherche de fuite. Si elle refuse et vous dit que c'est au syndic de le faire, c'est inexact — la règle s'applique toujours au local sinistré.</p>
+            <span onclick="openTemplateModal()" style="display:inline-block;margin-top:6px;color:#4E49FC;font-weight:600;cursor:pointer;text-decoration:underline;font-size:13.5px;">Voir le template de mail →</span>
           </div>
 
           <!-- Partie 2 : bannière rapport -->
@@ -2157,12 +2159,31 @@ main { flex: 1; overflow-y: auto; padding: 32px; position: relative; }
             <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;">
               <div>
                 <div style="font-size:13.5px;font-weight:600;color:#1d4ed8;margin-bottom:3px;">Vous avez déjà reçu le rapport de recherche de fuite ?</div>
-                <div style="font-size:12.5px;color:#3b82f6;">Si les parties communes sont bien touchées, vous pouvez poursuivre la procédure en ajoutant le rapport.</div>
+                <div style="font-size:12.5px;color:#3b82f6;">Si la fuite vient des parties communes, vous pouvez poursuivre en ajoutant le rapport de recherche de fuite.</div>
               </div>
               <div id="f2-rapport-zone" style="flex-shrink:0;">
-                <button onclick="simulateRapportUpload()" style="display:inline-flex;align-items:center;gap:6px;padding:8px 14px;background:white;border:1.5px solid #bfdbfe;border-radius:8px;font-size:13px;font-weight:600;color:#1d4ed8;cursor:pointer;font-family:inherit;">
+                <button onclick="simulateRapportUpload()" style="display:inline-flex;align-items:center;gap:6px;padding:8px 14px;background:#4E49FC;border:none;border-radius:8px;font-size:13px;font-weight:600;color:white;cursor:pointer;font-family:inherit;">
                   📎 Ajouter le rapport
                 </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Section conseils réflexes -->
+          <div style="margin-top:20px;">
+            <p style="font-size:13.5px;font-weight:600;color:#374151;margin-bottom:12px;">Les premiers réflexes à adopter :</p>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+              <!-- Colonne gauche -->
+              <div style="background:white;border:1px solid #e5e7eb;border-radius:10px;padding:14px 16px;">
+                <p style="font-size:13.5px;font-weight:600;color:#374151;margin-bottom:8px;">La fuite est dans mon logement</p>
+                <p style="font-size:13.5px;color:#374151;line-height:1.6;">Je coupe l'eau en fermant le robinet du compteur d'eau <span style="color:#6b7280;">(souvent sous l'évier ou dans un placard technique)</span></p>
+              </div>
+              <!-- Colonne droite -->
+              <div style="background:white;border:1px solid #e5e7eb;border-radius:10px;padding:14px 16px;">
+                <p style="font-size:13.5px;font-weight:600;color:#374151;margin-bottom:8px;">La fuite ne provient pas de mon logement</p>
+                <p style="font-size:13.5px;color:#374151;line-height:1.6;">Je vérifie toutes les pièces de mon logement :</p>
+                <p style="font-size:13.5px;color:#374151;line-height:1.6;margin-top:4px;">– Si dégât au plafond : alerter le voisin du dessus</p>
+                <p style="font-size:13.5px;color:#374151;line-height:1.6;">– Si dégât sur les murs : alerter le voisin d'à côté</p>
               </div>
             </div>
           </div>
@@ -2257,7 +2278,7 @@ main { flex: 1; overflow-y: auto; padding: 32px; position: relative; }
           <p><strong>Cliquez pour ajouter des photos</strong></p>
           <p style="font-size:12px;margin-top:4px;">JPG, PNG – 10 Mo max par photo</p>
         </div>
-        <div style="display:flex;justify-content:space-between;align-items:center;margin-top:16px;max-width:520px;">
+        <div style="display:flex;justify-content:flex-end;margin-top:16px;max-width:520px;">
           <button class="btn-pri" onclick="goF2Step(6)">Suivant →</button>
         </div>
       </div>
